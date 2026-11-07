@@ -4,7 +4,10 @@ import { BUSINESS } from '../src/data/business.ts';
 
 const OG_IMAGE_PATH = '/og-image.png';
 
-/** Valida e normaliza o domínio: sempre https-ou-http absoluto e sem barra no final. */
+/**
+ * Valida e normaliza o endereço: absoluto, sem barra no final e mantendo a subpasta, se houver
+ * (ex.: "https://usuario.github.io/skullizza").
+ */
 function normalizeSiteUrl(value: string | undefined): string | null {
   const trimmed = value?.trim();
   if (!trimmed) return null;
@@ -13,7 +16,24 @@ function normalizeSiteUrl(value: string | undefined): string | null {
   if (url.protocol !== 'https:' && url.protocol !== 'http:') {
     throw new Error(`SITE_URL inválido: ${trimmed}`);
   }
-  return url.origin;
+  return `${url.origin}${url.pathname.replace(/\/+$/, '')}`;
+}
+
+/** A diretiva frame-ancestors não vale em <meta> e gera aviso no console: fica só no header. */
+function metaCsp(policy: string): string {
+  return policy
+    .split(';')
+    .map((directive) => directive.trim())
+    .filter((directive) => directive && !directive.startsWith('frame-ancestors'))
+    .join('; ');
+}
+
+interface SeoOptions {
+  siteUrl: string | undefined;
+  /** Prévia: pede aos buscadores para não indexar e omite o sitemap. */
+  noindex: boolean;
+  /** A mesma política do header da hospedagem, repetida no HTML para hospedagens sem headers. */
+  contentSecurityPolicy: string | undefined;
 }
 
 /**
@@ -96,22 +116,35 @@ function buildSitemap(siteUrl: string): string {
  * Metadados que dependem do domínio. Canonical, og:url, og:image e sitemap exigem URL absoluta:
  * sem SITE_URL eles são omitidos, em vez de publicados com um domínio inventado.
  */
-export function seoPlugin(rawSiteUrl: string | undefined): Plugin {
+export function seoPlugin({
+  siteUrl: rawSiteUrl,
+  noindex,
+  contentSecurityPolicy,
+}: SeoOptions): Plugin {
   const siteUrl = normalizeSiteUrl(rawSiteUrl);
   let isSsrBuild = false;
   let isBuild = false;
+  let base = '/';
 
   return {
     name: 'skullizza-seo',
     configResolved(config) {
       isSsrBuild = Boolean(config.build.ssr);
       isBuild = config.command === 'build';
+      base = config.base;
     },
     transformIndexHtml: {
       order: 'post',
-      handler(_html, context) {
+      handler(html, context) {
         // A vitrine do design system não entra no build nem deve receber estes metadados.
-        if (context.path !== '/index.html') return [];
+        if (context.path !== '/index.html') return { html, tags: [] };
+
+        if (noindex) {
+          html = html.replace(
+            /<meta name="robots" content="[^"]*"\s*\/?>/,
+            '<meta name="robots" content="noindex, nofollow" />',
+          );
+        }
 
         // As duas fontes da primeira dobra começam a baixar junto com o HTML, não depois do CSS.
         const fontPreloads = Object.keys(context.bundle ?? {})
@@ -120,7 +153,7 @@ export function seoPlugin(rawSiteUrl: string | undefined): Plugin {
             tag: 'link',
             attrs: {
               rel: 'preload',
-              href: `/${file}`,
+              href: `${base}${file}`,
               as: 'font',
               type: 'font/woff2',
               crossorigin: '',
@@ -128,7 +161,23 @@ export function seoPlugin(rawSiteUrl: string | undefined): Plugin {
             injectTo: 'head-prepend' as const,
           }));
 
+        // Em hospedagens sem headers próprios (como o GitHub Pages) a CSP vale pelo HTML.
+        const cspTag =
+          isBuild && contentSecurityPolicy
+            ? [
+                {
+                  tag: 'meta',
+                  attrs: {
+                    'http-equiv': 'Content-Security-Policy',
+                    content: metaCsp(contentSecurityPolicy),
+                  },
+                  injectTo: 'head-prepend' as const,
+                },
+              ]
+            : [];
+
         const tags = [
+          ...cspTag,
           ...fontPreloads,
           {
             tag: 'script',
@@ -137,7 +186,7 @@ export function seoPlugin(rawSiteUrl: string | undefined): Plugin {
             injectTo: 'head' as const,
           },
         ];
-        if (!siteUrl) return tags;
+        if (!siteUrl) return { html, tags };
 
         const image = `${siteUrl}${OG_IMAGE_PATH}`;
         const meta = (property: string, content: string) => ({
@@ -145,35 +194,44 @@ export function seoPlugin(rawSiteUrl: string | undefined): Plugin {
           attrs: { property, content },
           injectTo: 'head' as const,
         });
-        return [
-          ...tags,
-          {
-            tag: 'link',
-            attrs: { rel: 'canonical', href: `${siteUrl}/` },
-            injectTo: 'head' as const,
-          },
-          meta('og:url', `${siteUrl}/`),
-          meta('og:image', image),
-          meta('og:image:width', '1200'),
-          meta('og:image:height', '630'),
-          meta('og:image:alt', 'Skullizza: pizzas, calzones e massas em Curitiba.'),
-          {
-            tag: 'meta',
-            attrs: { name: 'twitter:image', content: image },
-            injectTo: 'head' as const,
-          },
-        ];
+        return {
+          html,
+          tags: [
+            ...tags,
+            {
+              tag: 'link',
+              attrs: { rel: 'canonical', href: `${siteUrl}/` },
+              injectTo: 'head' as const,
+            },
+            meta('og:url', `${siteUrl}/`),
+            meta('og:image', image),
+            meta('og:image:width', '1200'),
+            meta('og:image:height', '630'),
+            meta('og:image:alt', 'Skullizza: pizzas, calzones e massas em Curitiba.'),
+            {
+              tag: 'meta',
+              attrs: { name: 'twitter:image', content: image },
+              injectTo: 'head' as const,
+            },
+          ],
+        };
       },
     },
     generateBundle() {
       if (isSsrBuild || !isBuild) return;
 
-      this.emitFile({ type: 'asset', fileName: 'robots.txt', source: buildRobots(siteUrl) });
+      // Uma prévia sem indexação não anuncia sitemap.
+      const sitemapUrl = noindex ? null : siteUrl;
+      this.emitFile({ type: 'asset', fileName: 'robots.txt', source: buildRobots(sitemapUrl) });
       this.emitFile({ type: 'asset', fileName: 'llms.txt', source: buildLlmsTxt(siteUrl) });
-      if (siteUrl) {
-        this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: buildSitemap(siteUrl) });
-      } else {
+      if (sitemapUrl) {
+        this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: buildSitemap(sitemapUrl) });
+      }
+      if (!siteUrl) {
         this.warn('SITE_URL não definido: canonical, og:url, og:image e sitemap foram omitidos.');
+      }
+      if (noindex) {
+        this.warn('SITE_NOINDEX ativo: o site pede aos buscadores para não ser indexado.');
       }
     },
   };

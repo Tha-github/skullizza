@@ -35,6 +35,14 @@ ilustrativa provisória". Eles somem sozinhos quando os dados reais entram.
 - **Textos escritos pela agência:** "O que faz parte da Skullizza", "Para abrir o apetite", "Deu
   vontade? Peça agora.", "Pizzaria em Curitiba" e as descrições dos 4 itens da proposta.
 
+## Prévia no GitHub Pages
+
+Cada push na `main` publica em https://tha-github.github.io/skullizza/ via
+`.github/workflows/deploy-pages.yml`. A prévia sai com `noindex`, para o conteúdo provisório não ir
+para o Google. No lançamento, remova `SITE_NOINDEX` do workflow e troque `SITE_URL` pelo domínio
+final. O GitHub Pages não permite headers próprios: a CSP vale pela meta tag, mas HSTS,
+Permissions-Policy e a proteção contra iframe só funcionam numa hospedagem como a Vercel.
+
 ## Publicação (Vercel)
 
 1. Versionar o projeto: o repositório ainda não usa git.
