@@ -1,0 +1,120 @@
+.toggle {
+  display: grid;
+  place-items: center;
+  inline-size: var(--tap-target);
+  block-size: var(--tap-target);
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+.toggle:hover {
+  color: var(--color-accent);
+}
+
+.toggle:active {
+  color: var(--color-accent-active);
+}
+
+.bars {
+  inline-size: 1.5rem;
+  block-size: 0.75rem;
+  border-block: var(--border-thick) solid currentColor;
+}
+
+.cross {
+  position: relative;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+}
+
+.cross::before,
+.cross::after {
+  content: '';
+  position: absolute;
+  inset-block-start: calc(50% - 1px);
+  inset-inline: 0;
+  block-size: var(--border-thick);
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.cross::after {
+  transform: rotate(-45deg);
+}
+
+.dialog {
+  inline-size: 100%;
+  max-inline-size: none;
+  block-size: 100dvh;
+  max-block-size: none;
+  padding: 0 var(--gutter) var(--space-6);
+  border: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.dialog[open] {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.top {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  block-size: var(--header-height);
+}
+
+.list {
+  padding: var(--space-6) 0;
+  list-style: none;
+}
+
+.link {
+  display: block;
+  padding-block: var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--text-display-md);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+.link:hover {
+  color: var(--color-accent);
+}
+
+.link:active {
+  color: var(--color-accent-active);
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-block-start: auto;
+}
+
+.cta {
+  inline-size: 100%;
+}
+
+.instagram {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  gap: var(--space-2);
+  min-block-size: var(--tap-target);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.instagram:hover {
+  color: var(--color-accent);
+}

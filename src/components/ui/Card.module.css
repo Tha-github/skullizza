@@ -1,0 +1,115 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  border: var(--border-thin) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+.surface {
+  background: var(--color-surface);
+}
+
+.outline {
+  background: transparent;
+}
+
+@media (hover: hover) {
+  .card:hover {
+    border-color: var(--color-marker);
+  }
+
+  .card:hover img {
+    transform: scale(1.03);
+  }
+}
+
+.card img {
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.media {
+  position: relative;
+  overflow: hidden;
+}
+
+.badge {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-yellow);
+  color: var(--color-black);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+}
+
+.eyebrow {
+  color: var(--color-text-muted);
+}
+
+.title {
+  font-size: var(--text-xl);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.text {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.footer {
+  margin-block-start: auto;
+  padding-block-start: var(--space-4);
+}
+
+/* A mídia preenche a altura do card: a proporção fixa da moldura deixa de valer */
+@media (max-width: 639px) {
+  .compactOnMobile {
+    flex-direction: row;
+  }
+
+  /* Em 320px (zoom de 400%) a foto encolhe para o botão continuar inteiro */
+  .compactOnMobile .media {
+    flex: 0 0 clamp(6.5rem, 34%, 9rem);
+  }
+
+  /* Só a moldura: a etiqueta de destaque, também filha da mídia, mantém o próprio tamanho */
+  .compactOnMobile .media > :first-child,
+  .compactOnMobile .media > :first-child > :first-child {
+    block-size: 100%;
+    aspect-ratio: auto;
+  }
+
+  .compactOnMobile .body {
+    min-inline-size: 0;
+    padding: var(--space-4) var(--space-3);
+  }
+
+  .compactOnMobile .footer a {
+    padding-inline: var(--space-3);
+  }
+
+  .compactOnMobile .title {
+    font-size: var(--text-lg);
+  }
+
+  .compactOnMobile .footer {
+    padding-block-start: var(--space-2);
+  }
+}

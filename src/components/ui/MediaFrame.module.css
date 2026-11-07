@@ -1,0 +1,64 @@
+.frame {
+  --frame-offset: clamp(0.5rem, 0.3rem + 1vw, 1rem);
+
+  position: relative;
+}
+
+.window {
+  position: relative;
+  aspect-ratio: var(--frame-ratio);
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.window :is(img, picture) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.caption {
+  margin-block-start: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+/* Bloco deslocado: a margem reserva o espaço da sombra, então nunca gera overflow */
+.offset .window {
+  margin-inline-end: var(--frame-offset);
+  margin-block-end: var(--frame-offset);
+  box-shadow: var(--frame-offset) var(--frame-offset) 0 var(--color-marker);
+}
+
+.offset .caption {
+  margin-block-start: calc(var(--frame-offset) + var(--space-2));
+}
+
+/* Legenda como etiqueta sobre a foto. Não combina com `slice`, cuja base é diagonal. */
+.overlay .caption {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-black);
+  color: var(--color-white);
+  font-weight: 800;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.offset.overlay .caption {
+  inset-block-end: var(--frame-offset);
+}
+
+/* Canto cortado na diagonal, como o corte da cunha */
+.notch .window {
+  clip-path: polygon(0 0, calc(100% - 12%) 0, 100% 10%, 100% 100%, 0 100%);
+}
+
+/* Base em diagonal: a transição entre foto e seção seguinte */
+.slice .window {
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+}

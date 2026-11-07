@@ -1,0 +1,97 @@
+.intro {
+  padding-block-end: var(--space-12);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.logoGrid {
+  display: grid;
+  inline-size: 100%;
+  gap: var(--space-4);
+}
+
+.logoCell {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-6);
+  border: var(--border-thin) solid var(--color-border);
+}
+
+.logoCell svg {
+  max-inline-size: 100%;
+}
+
+.symbolDark {
+  color: var(--color-yellow);
+}
+
+.symbolAccent {
+  padding: var(--space-2);
+  background: var(--color-yellow);
+  color: var(--color-black);
+}
+
+.swatches {
+  display: grid;
+  inline-size: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: var(--space-2);
+  padding: 0;
+  list-style: none;
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-block-size: 7rem;
+  padding: var(--space-3);
+  border: var(--border-thin) solid var(--color-gray-200);
+  font-size: var(--text-xs);
+}
+
+.themeBlock {
+  padding-block: var(--space-8);
+}
+
+.cardGrid {
+  display: grid;
+  inline-size: 100%;
+  gap: var(--space-4);
+}
+
+.frameGrid {
+  display: grid;
+  inline-size: 100%;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.photoSlot {
+  display: grid;
+  place-items: center;
+  block-size: 100%;
+  background: var(--color-gray-800);
+  color: var(--color-gray-600);
+}
+
+@media (min-width: 768px) {
+  .logoGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cardGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .frameGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

@@ -1,0 +1,119 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-block-size: var(--tap-target);
+  border: var(--border-thick) solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: var(--font-body);
+  font-weight: 800;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-label);
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
+}
+
+.button:focus-visible {
+  outline-offset: 3px;
+}
+
+/* Abaixo de 360px (como em zoom de 400%) o texto quebra em vez de vazar da tela */
+@media (max-width: 359px) {
+  .button {
+    white-space: normal;
+  }
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.md {
+  padding: var(--space-2) var(--space-6);
+  font-size: var(--text-sm);
+}
+
+.lg {
+  padding: var(--space-3) var(--space-8);
+  font-size: var(--text-base);
+  min-block-size: var(--space-12);
+}
+
+/* Primário: preenchimento do acento, com sombra dura no hover */
+.primary {
+  border-color: var(--button-primary-border);
+  background: var(--button-primary-bg);
+  color: var(--button-primary-fg);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+  box-shadow: 4px 4px 0 var(--color-shadow-hard);
+  transform: translate(-2px, -2px);
+}
+
+.primary:active:not(:disabled) {
+  background: var(--color-accent-active);
+  box-shadow: none;
+  transform: none;
+}
+
+/* Secundário: contorno na cor do texto, inverte no hover */
+.secondary {
+  border-color: var(--color-text);
+  color: var(--color-text);
+}
+
+.secondary:hover:not(:disabled) {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.secondary:active:not(:disabled) {
+  background: var(--color-text-muted);
+  border-color: var(--color-text-muted);
+  color: var(--color-bg);
+}
+
+/* Fantasma: ação de menor peso, sublinhada */
+.ghost {
+  padding-inline: var(--space-1);
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-color: var(--color-marker);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+.ghost:hover:not(:disabled) .arrow {
+  transform: translateX(4px);
+}
+
+.ghost:active:not(:disabled) {
+  color: var(--color-text-muted);
+}
+
+/* Seta em cunha: mesma forma do "I" do logo, deitada */
+.arrow {
+  flex: none;
+  inline-size: 0.75em;
+  block-size: 0.75em;
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 42%, 100% 58%, 0 100%);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.primary:hover:not(:disabled) .arrow,
+.secondary:hover:not(:disabled) .arrow {
+  transform: translateX(2px);
+}

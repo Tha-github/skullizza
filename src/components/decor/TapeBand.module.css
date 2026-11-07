@@ -1,0 +1,43 @@
+.band {
+  overflow: hidden;
+  padding-block: var(--space-3);
+  border-block: var(--border-thin) solid var(--color-border);
+}
+
+.track {
+  display: flex;
+  inline-size: max-content;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding-inline-end: var(--space-6);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-label);
+  line-height: var(--leading-tight);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.item::after {
+  content: '';
+  inline-size: 0.6em;
+  block-size: 0.8em;
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 0, 60% 100%, 40% 100%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animated {
+    animation: tape-scroll 60s linear infinite;
+  }
+}
+
+@keyframes tape-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}

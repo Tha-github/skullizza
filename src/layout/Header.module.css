@@ -1,0 +1,157 @@
+.header {
+  --logo-height: 1.375rem;
+
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--z-sticky);
+  border-block-end: var(--border-thin) solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  block-size: var(--header-height);
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--tap-target);
+}
+
+.logo {
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+
+.logoLink:hover .logo {
+  opacity: 0.8;
+}
+
+.nav,
+.instagramLabel,
+.orderLong {
+  display: none;
+}
+
+.navList {
+  display: flex;
+  gap: var(--space-8);
+  padding: 0;
+  list-style: none;
+}
+
+.navLink {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-block-size: var(--tap-target);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+/* Cunha que desce do topo do link */
+.navLink::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 50%;
+  inline-size: 0.625rem;
+  block-size: 0.5rem;
+  background: var(--color-marker);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  opacity: 0;
+  transform: translate(-50%, -4px);
+  transition:
+    opacity var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+.navLink:hover {
+  color: var(--color-accent);
+}
+
+.navLink:hover::before {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.navLink:active {
+  color: var(--color-accent-active);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.instagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-inline-size: var(--tap-target);
+  min-block-size: var(--tap-target);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+.instagram:hover {
+  color: var(--color-accent);
+}
+
+.instagram:active {
+  color: var(--color-accent-active);
+}
+
+/* Prioridade em telas estreitas: logo, pedido e menu */
+@media (max-width: 479px) {
+  .instagram {
+    display: none;
+  }
+}
+
+.order {
+  padding-inline: var(--space-3);
+}
+
+@media (min-width: 1024px) {
+  .header {
+    --logo-height: 1.75rem;
+  }
+
+  .nav {
+    display: block;
+  }
+
+  .actions {
+    gap: var(--space-6);
+  }
+
+  .instagramLabel {
+    display: inline;
+  }
+
+  .order {
+    padding-inline: var(--space-4);
+  }
+
+  .orderShort {
+    display: none;
+  }
+
+  .orderLong {
+    display: inline;
+  }
+
+  .menu {
+    display: none;
+  }
+}

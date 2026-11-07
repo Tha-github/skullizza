@@ -1,0 +1,33 @@
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+/* O botão ocupa o que sobra: ao quebrar de linha, vira um alvo de toque de largura total */
+.footer a {
+  flex: 1 0 auto;
+}
+
+.price {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+}
+
+.priceMissing {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.noPhoto {
+  display: grid;
+  place-items: center;
+  block-size: 100%;
+  background: var(--color-black);
+  color: var(--color-yellow);
+}

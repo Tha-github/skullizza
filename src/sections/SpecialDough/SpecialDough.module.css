@@ -1,0 +1,140 @@
+/*
+ * Espelha o hero: a foto vem da esquerda e sangra da tela, com o corte em cunha à direita.
+ * Mobile: foto no topo, com corte na base; texto abaixo, sem nada sobreposto.
+ */
+.stage {
+  --stamp-size: 6rem;
+
+  position: relative;
+}
+
+.visual {
+  position: relative;
+}
+
+.photo {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 50% 70%;
+  background: var(--color-black);
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+}
+
+.notice {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-black);
+  color: var(--color-white);
+  font-size: var(--text-xs);
+  line-height: var(--leading-tight);
+}
+
+/*
+ * O selo fica inteiro sobre a foto: amarelo sobre o fundo amarelo perderia a forma.
+ * 67.5vw é onde o corte diagonal começa à direita (90% da altura de uma foto 4:3).
+ */
+.stamp {
+  position: absolute;
+  inset-block-start: calc(67.5vw - var(--stamp-size) - var(--space-2));
+  inset-inline-end: var(--gutter);
+}
+
+.noBreak {
+  white-space: nowrap;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-8) var(--gutter) var(--space-12);
+}
+
+.title {
+  /* Limitado por "PERSONALIDADE.", a palavra mais longa */
+  font-size: min(13.5vw, 7.5rem);
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.text {
+  max-inline-size: 46ch;
+  font-size: var(--text-lg);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.cta {
+  inline-size: 100%;
+  margin-block-start: var(--space-2);
+}
+
+@media (min-width: 640px) {
+  .cta {
+    inline-size: auto;
+  }
+}
+
+/* Tablet em pé: foto mais baixa, para o título aparecer na mesma tela */
+@media (min-width: 768px) {
+  .stage {
+    --stamp-size: 8rem;
+  }
+
+  .photo {
+    aspect-ratio: 16 / 9;
+  }
+
+  .stamp {
+    inset-block-start: calc(50.6vw - var(--stamp-size) - var(--space-2));
+  }
+}
+
+/* Desktop: foto em tela cheia à esquerda, título grande invadindo o espaço amarelo */
+@media (min-width: 1024px) {
+  .stage {
+    --stamp-size: clamp(8rem, 18svh, 11rem);
+
+    display: grid;
+    grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
+    align-items: center;
+    min-block-size: clamp(36rem, 92svh, 58rem);
+  }
+
+  .visual {
+    position: absolute;
+    inset: 0 45% 0 0;
+  }
+
+  .photo {
+    block-size: 100%;
+    aspect-ratio: auto;
+    object-position: 50% 62%;
+    clip-path: polygon(0 0, 100% 0, 84% 100%, 0 100%);
+  }
+
+  /* A etiqueta acompanha o canto esquerdo, fora do corte diagonal */
+  .notice {
+    inset-block: auto 0;
+  }
+
+  .stamp {
+    inset-block: auto var(--space-8);
+    inset-inline: auto 56%;
+  }
+
+  .copy {
+    grid-column: 2;
+    gap: var(--space-6);
+    padding: var(--space-16) var(--gutter) var(--space-16) 0;
+  }
+
+  .title {
+    font-size: min(6.6vw, 15svh, 8rem);
+  }
+}

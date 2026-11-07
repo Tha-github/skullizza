@@ -1,0 +1,159 @@
+/*
+ * Design tokens. Componentes usam os tokens semânticos (--color-bg, --color-text...),
+ * nunca os valores de marca diretamente, para funcionar em qualquer tema de seção.
+ *
+ * Breakpoints (mobile-first; variáveis CSS não funcionam em @media, use os valores):
+ *   sm 480px | md 768px | lg 1024px | xl 1366px | 2xl 1920px
+ */
+:root {
+  /* Cores de marca */
+  --color-yellow: #fdd900;
+  --color-yellow-light: #ffe84d;
+  --color-yellow-dark: #e0c000;
+  --color-black: #111111;
+  --color-white: #ffffff;
+
+  /* Neutros */
+  --color-gray-900: #1c1c1c;
+  --color-gray-800: #2a2a2a;
+  --color-gray-600: #5c5c5c;
+  --color-gray-400: #a3a3a3;
+  --color-gray-200: #e5e5e5;
+  --color-gray-100: #f5f5f5;
+
+  /* Tipografia */
+  --font-display: 'Anton', 'Anton Fallback', Impact, 'Arial Narrow', sans-serif;
+  --font-body:
+    'Archivo', 'Archivo Fallback', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: clamp(1.125rem, 1.08rem + 0.2vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.15rem + 0.45vw, 1.625rem);
+  --text-display-sm: clamp(1.75rem, 1.5rem + 1.1vw, 2.75rem);
+  --text-display-md: clamp(2.25rem, 1.8rem + 2vw, 4rem);
+  --text-display-lg: clamp(3rem, 2.2rem + 3.5vw, 6.5rem);
+  --text-display-xl: clamp(3.5rem, 2rem + 7vw, 10rem);
+
+  /* Abaixo de 1.14 os acentos do Anton (Ã, É, Õ) encostam na linha de cima */
+  --leading-display: 1.14;
+  --leading-tight: 1.2;
+  --leading-body: 1.6;
+
+  --tracking-display: 0.01em;
+  --tracking-label: 0.08em;
+
+  /* Espaçamento (base de 4px) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* Hierarquia vertical: rótulo > título > texto > ação */
+  --stack-sm: var(--space-2);
+  --stack-md: var(--space-4);
+  --stack-lg: var(--space-8);
+
+  /* Layout fluido */
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 3rem);
+  --section-space: clamp(4rem, 3rem + 5vw, 8rem);
+  --container-max: 90rem;
+  --container-narrow: 48rem;
+  --tap-target: 2.75rem;
+  --header-height: 3.5rem;
+
+  /* Bordas: cantos discretos, identidade editorial */
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-pill: 999px;
+  --border-thin: 1px;
+  --border-thick: 2px;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.24);
+  --shadow-md: 0 8px 24px rgb(0 0 0 / 0.28);
+  --shadow-lg: 0 24px 64px rgb(0 0 0 / 0.36);
+
+  /* Movimento */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 400ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Camadas */
+  --z-sticky: 100;
+  --z-floating: 200;
+  --z-overlay: 300;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-height: 4.5rem;
+  }
+}
+
+/* Temas de seção: aplique a classe no elemento raiz da seção. O escuro é o padrão. */
+:root,
+.theme-dark {
+  --color-bg: var(--color-black);
+  --color-surface: var(--color-gray-900);
+  --color-border: var(--color-gray-800);
+  --color-text: var(--color-white);
+  --color-text-muted: var(--color-gray-400);
+  --color-accent: var(--color-yellow);
+  --color-on-accent: var(--color-black);
+  --color-accent-hover: var(--color-yellow-light);
+  --color-accent-active: var(--color-yellow-dark);
+  --color-marker: var(--color-yellow);
+  --color-shadow-hard: var(--color-white);
+  --color-focus: var(--color-yellow);
+  --button-primary-bg: var(--color-yellow);
+  --button-primary-fg: var(--color-black);
+  --button-primary-border: var(--color-yellow);
+}
+
+/* Amarelo sobre branco não tem contraste: aqui o acento é só preenchimento, nunca texto. */
+.theme-light {
+  --color-bg: var(--color-white);
+  --color-surface: var(--color-gray-100);
+  --color-border: var(--color-gray-200);
+  --color-text: var(--color-black);
+  --color-text-muted: var(--color-gray-600);
+  --color-accent: var(--color-yellow);
+  --color-on-accent: var(--color-black);
+  --color-accent-hover: var(--color-yellow-light);
+  --color-accent-active: var(--color-yellow-dark);
+  --color-marker: var(--color-black);
+  --color-shadow-hard: var(--color-black);
+  --color-focus: var(--color-black);
+  --button-primary-bg: var(--color-yellow);
+  --button-primary-fg: var(--color-black);
+  --button-primary-border: var(--color-black);
+}
+
+.theme-accent {
+  --color-bg: var(--color-yellow);
+  --color-surface: var(--color-black);
+  --color-border: var(--color-black);
+  --color-text: var(--color-black);
+  --color-text-muted: var(--color-gray-800);
+  --color-accent: var(--color-black);
+  --color-on-accent: var(--color-yellow);
+  --color-accent-hover: var(--color-gray-800);
+  --color-accent-active: var(--color-gray-900);
+  --color-marker: var(--color-black);
+  --color-shadow-hard: var(--color-white);
+  --color-focus: var(--color-black);
+  --button-primary-bg: var(--color-black);
+  --button-primary-fg: var(--color-yellow);
+  --button-primary-border: var(--color-black);
+}

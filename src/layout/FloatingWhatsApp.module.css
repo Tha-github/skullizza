@@ -1,0 +1,61 @@
+/* A borda preta mantém o botão visível também sobre as seções amarelas */
+.button {
+  position: fixed;
+  inset-block-end: var(--space-4);
+  inset-inline-end: var(--space-4);
+  z-index: var(--z-floating);
+  display: grid;
+  place-items: center;
+  inline-size: 3.5rem;
+  block-size: 3.5rem;
+  border: var(--border-thick) solid var(--color-black);
+  border-radius: var(--radius-sm);
+  background: var(--color-yellow);
+  box-shadow: var(--shadow-md);
+  color: var(--color-black);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out),
+    opacity var(--duration-base) var(--ease-out),
+    visibility var(--duration-base);
+}
+
+.button:hover {
+  background: var(--color-yellow-light);
+  box-shadow: 4px 4px 0 var(--color-black);
+  transform: translate(-2px, -2px);
+}
+
+.button:active {
+  background: var(--color-yellow-dark);
+  box-shadow: none;
+  transform: none;
+}
+
+/* Foco visível sobre qualquer seção: anel preto com halo branco */
+.button:focus-visible {
+  outline: 3px solid var(--color-black);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 8px var(--color-white);
+}
+
+/* visibility também o tira da ordem de foco enquanto escondido */
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(1rem);
+}
+
+@media (min-width: 1024px) {
+  .button {
+    inset-block-end: var(--space-6);
+    inset-inline-end: var(--space-6);
+  }
+}
+
+@media print {
+  .button {
+    display: none;
+  }
+}

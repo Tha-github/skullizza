@@ -1,0 +1,37 @@
+/*
+ * Fontes auto-hospedadas (sem requisição ao Google Fonts).
+ * Somente o subconjunto latin, que cobre os acentos do português.
+ */
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('@fontsource/anton/files/anton-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2') format('woff2');
+}
+
+/*
+ * Reservas com a mesma largura das fontes web: enquanto elas carregam, o texto quebra nas mesmas
+ * linhas e nada se desloca na troca. Proporções medidas no navegador com os textos reais do site
+ * (Arial Bold x Anton: 69,1%; Arial x Archivo: 98,2%).
+ */
+@font-face {
+  font-family: 'Anton Fallback';
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  size-adjust: 69.1%;
+}
+
+@font-face {
+  font-family: 'Archivo Fallback';
+  font-weight: 100 900;
+  src: local('Arial'), local('ArialMT');
+  size-adjust: 98.2%;
+}

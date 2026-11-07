@@ -1,0 +1,34 @@
+.section {
+  --symbol-size: clamp(16rem, 42vw, 38rem);
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* Símbolo em grande escala, sangrando da seção, um tom abaixo do fundo */
+.symbol {
+  position: absolute;
+  inset-block-end: calc(var(--symbol-size) * -0.22);
+  inset-inline-end: calc(var(--symbol-size) * -0.12);
+  color: var(--color-yellow-dark);
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.handle {
+  font-size: min(17.5vw, 15rem);
+  text-transform: uppercase;
+  text-wrap: initial;
+}
+
+.text {
+  margin-block-end: var(--space-4);
+  font-size: var(--text-lg);
+  font-weight: 500;
+}

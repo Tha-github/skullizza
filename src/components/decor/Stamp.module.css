@@ -1,0 +1,41 @@
+.stamp {
+  position: relative;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-yellow);
+  color: var(--color-black);
+  /* Sem o recorte, os cantos do anel girando alargam a página quando o selo está perto da borda */
+  overflow: hidden;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.text {
+  fill: currentColor;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.symbol {
+  position: relative;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ring {
+    animation: stamp-spin 30s linear infinite;
+  }
+}
+
+@keyframes stamp-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

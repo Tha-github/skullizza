@@ -1,0 +1,59 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  text-size-adjust: 100%;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+/* O <picture> só escolhe o arquivo: quem ocupa espaço e recebe estilo é o <img> */
+picture {
+  display: contents;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+ul[class],
+ol[class] {
+  padding: 0;
+  list-style: none;
+}
+
+p,
+h4 {
+  overflow-wrap: break-word;
+}
+
+/*
+ * Títulos em grande escala: "anywhere" também reduz a largura mínima do elemento. Sem isso,
+ * uma palavra longa (com zoom ou espaçamento de texto ampliado) alarga a grade e a página.
+ */
+h1,
+h2,
+h3 {
+  overflow-wrap: anywhere;
+}

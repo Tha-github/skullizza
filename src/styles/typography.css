@@ -1,0 +1,94 @@
+/*
+ * Papéis tipográficos. Separam aparência de semântica: um h2 pode usar .display-lg.
+ * Anton: títulos curtos, sempre em caixa alta e a partir de --text-xl.
+ * Archivo: leitura, rótulos e botões.
+ */
+.display-xl,
+.display-lg,
+.display-md,
+.display-sm {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.display-xl {
+  font-size: var(--text-display-xl);
+}
+
+.display-lg {
+  font-size: var(--text-display-lg);
+}
+
+.display-md {
+  font-size: var(--text-display-md);
+}
+
+.display-sm {
+  font-size: var(--text-display-sm);
+}
+
+.lead {
+  font-size: var(--text-xl);
+  font-weight: 500;
+  line-height: 1.4;
+  max-inline-size: 34ch;
+}
+
+.body-text {
+  max-inline-size: 62ch;
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.caption {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+/* A fonte é explícita porque a classe também é usada em títulos, que herdam a Anton */
+.label {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  letter-spacing: var(--tracking-label);
+  line-height: var(--leading-tight);
+  text-transform: uppercase;
+}
+
+/* Link em texto corrido */
+.link {
+  text-decoration-color: var(--color-marker);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+.link:hover {
+  text-decoration-thickness: 3px;
+}
+
+.link:active {
+  color: var(--color-text-muted);
+}
+
+/* Ritmo vertical: define o espaço entre filhos diretos */
+.stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--stack-gap, var(--stack-md));
+}
+
+.stack-sm {
+  --stack-gap: var(--stack-sm);
+}
+
+.stack-lg {
+  --stack-gap: var(--stack-lg);
+}

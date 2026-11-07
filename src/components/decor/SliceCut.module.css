@@ -1,0 +1,15 @@
+.cut {
+  block-size: clamp(2rem, 1rem + 4vw, 5rem);
+}
+
+.fill {
+  block-size: 100%;
+}
+
+.rise {
+  clip-path: polygon(0 100%, 100% 0, 100% 100%);
+}
+
+.fall {
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}

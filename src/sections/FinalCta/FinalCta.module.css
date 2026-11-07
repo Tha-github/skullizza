@@ -1,0 +1,44 @@
+.layout {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.title {
+  font-size: min(16.5vw, 9rem);
+  text-transform: uppercase;
+}
+
+.action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.text {
+  font-size: var(--text-lg);
+  font-weight: 500;
+}
+
+.cta {
+  inline-size: 100%;
+}
+
+@media (min-width: 640px) {
+  .cta {
+    inline-size: auto;
+  }
+}
+
+/* Título ocupando a largura, ação alinhada à base dele */
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: end;
+    gap: var(--space-16);
+  }
+
+  .title {
+    font-size: min(9.5vw, 9rem);
+  }
+}

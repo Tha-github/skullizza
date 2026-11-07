@@ -1,0 +1,141 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.text {
+  max-inline-size: 40ch;
+  color: var(--color-text-muted);
+  font-size: var(--text-lg);
+}
+
+/* Cartão branco com o canto em cunha: o endereço é a informação principal da seção */
+.addressCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-8) var(--space-4);
+  clip-path: polygon(0 0, calc(100% - 2.5rem) 0, 100% 2.5rem, 100% 100%, 0 100%);
+  font-style: normal;
+}
+
+.mapsCta {
+  inline-size: 100%;
+  padding-inline: var(--space-3);
+}
+
+@media (min-width: 640px) {
+  .addressCard {
+    padding-inline: var(--space-6);
+  }
+
+  .mapsCta {
+    inline-size: auto;
+    padding-inline: var(--space-8);
+  }
+}
+
+.addressLine {
+  font-family: var(--font-display);
+  font-size: var(--text-display-md);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+}
+
+.addressCity {
+  margin-block-end: var(--space-4);
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+.row {
+  display: grid;
+  gap: var(--space-1);
+  padding-block: var(--space-3);
+  border-block-start: var(--border-thin) solid var(--color-border);
+}
+
+.row:last-child {
+  border-block-end: var(--border-thin) solid var(--color-border);
+}
+
+.row dd {
+  margin: 0;
+}
+
+.term {
+  color: var(--color-text-muted);
+}
+
+.value {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--tap-target);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  text-decoration-color: var(--color-marker);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+.value:hover {
+  color: var(--color-accent);
+}
+
+.value:active {
+  color: var(--color-accent-active);
+}
+
+.hours {
+  display: block;
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+.pending {
+  display: inline-block;
+  margin-block-start: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-yellow);
+  color: var(--color-black);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .row {
+    grid-template-columns: 8rem minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-4);
+  }
+}
+
+/* Título acima, à esquerda; cartão e dados lado a lado */
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-12) var(--space-16);
+  }
+
+  .intro {
+    grid-column: 1 / -1;
+  }
+
+  .addressCard {
+    align-self: start;
+    padding: var(--space-12) var(--space-8);
+  }
+}
